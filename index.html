@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excursiones NIA- Una aventura garantizada | Agencia de Viajes</title>
+    <style>
+        /* ==========================================================================
+           ESTILOS GENERALES Y PALETA CORPORATIVA
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Encabezado Principal */
+        header {
+        
+            background-color: #0b2545;
+            border-bottom: 4px solid #f4d03f;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-texto h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .logo-texto h1 span {
+            color: #f4d03f;
+        }
+
+        .eslogan {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #cbd5e1;
+            display: block;
+            margin-top: 4px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f4d03f;
+        }
+
+        /* Banner Principal / Hero */
+        .hero {
+            background: linear-gradient(rgba(11, 37, 69, 0.85), rgba(11, 37, 69, 0.6)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=1200') no-repeat center center/cover;
+            height: 45vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero h2 span {
+            color: #f4d03f;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        /* ==========================================================================
+           CONTENEDOR DE CATÁLOGO Y FILTROS
+           ========================================================================== */
+        .seccion-viajes {
+            max-width: 1200px;
+            margin: -40px auto 60px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Buscador Interno por Destino */
+        .buscador-interno {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            border-left: 6px solid #0b2545;
+        }
+
+        .buscador-interno p {
+            font-weight: 700;
+            color: #0b2545;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .grid-botones-destinos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-destino {
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-destino:hover, .btn-destino.activo {
+            background-color: #0b2545;
+            color: white;
+            border-color: #0b2545;
+        }
+
+        /* ==========================================================================
+           DISEÑO DE TARJETAS DE CATÁLOGO
+           ========================================================================== */
+        .grid-catalogo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .tarjeta-viaje {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tarjeta-viaje:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .imagen-contenedor {
+            position: relative;
+        }
+
+        .tarjeta-viaje img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .badge-tipo {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #0b2545;
+            color: #f4d03f;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-mes {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #f4d03f;
+            color: #0b2545;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .tarjeta-contenido {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .tarjeta-contenido h4 {
+            color: #0b2545;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .detalle-item {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detalle-item strong {
+            color: #0b2545;
+        }
+
+        .cupo-indicador {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .dispo { background-color: #e6f4ea; color: #137333; }
+        .pocos { background-color: #fef7e0; color: #b06000; }
+        .ultimos { background-color: #fce8e6; color: #c5221f; }
+
+        .incluye-box {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .incluye-titulo {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .lista-incluye {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .lista-incluye li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* Parte inferior de la tarjeta */
+        .tarjeta-acciones {
+            padding: 20px 25px;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .precio-contenedor {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .precio-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .precio-valor {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0b2545;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128c7e;
+        }
+
+        /* ==========================================================================
+           SECCIÓN DE CONTACTO Y REDES SOCIALES
+           ========================================================================== */
+        .seccion-contacto {
+            background-color: #ffffff;
+            padding: 60px 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .contacto-contenedor {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contacto-contenedor h3 {
+            font-size: 2.2rem;
+            color: #0b2545;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .contacto-linea {
+            width: 60px;
+            height: 4px;
+            background-color: #f4d03f;
+            margin: 0 auto 30px auto;
+            border-radius: 2px;
+        }
+
+        .contacto-contenedor p {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 40px;
+        }
+
+        .grid-canales {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .canal-tarjeta {
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .canal-tarjeta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .canal-icono {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .canal-tarjeta h4 {
+            color: #0b2545;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .canal-tarjeta p {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 5px solid #f4d03f;
+        }
+
+        footer .eslogan-footer {
+            font-weight: 700;
+            color: #f4d03f;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            .hero h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+    <div class="logo-container">
+
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXDoS1SzLWY8pMVN18cXOMKaBPUnqiHqqGzOxdW6xvaVpVhu7c2Exfn5BXK35bqqNbp9y5TcKeHe05nqCWrUOitZo0vBPfJTrskFkiCPeeRJtaz1OFIo0KsrDmd5GjX71vWbwZJdnT9pKm4K8QKFiL3_gfjjUC710SSImoAhwC4IJZ9O3b1oMAMfbfGQ/w1200-h630-p-k-no-nu/IMG-20230814-WA0078.jpg" alt="Logo NIA" width="60">
+
+        <div class="logo-texto">
+            <h1>EXCURSIONES <span>NIA</span></h1>
+            <span class="eslogan">Una aventura garantizada</span>
+        </div>
+    </div>
+
+    <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#seccion-viajes">Catálogo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+               <li><a href="#conoce-sobre-nosotros">PERFIL CORPORATIVO</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <h2>Disfruta con <span>Excursiones y viajes NIA </span></h2>
+        <p>Explora los destinos más espectaculares de nuestro país con la mayor comodidad terrestre.</p>
+    </section>
+
+    <section class="seccion-viajes" id="seccion-viajes">
+       
+        <div class="buscador-interno">
+            <p>Selecciona tu destino ideal:</p>
+            <div class="grid-botones-destinos">
+                <button class="btn-destino activo" onclick="filtrarDestinoPlanes('todos', this)">Todos los Planes</button>
+                <button class="btn-destino" onclick="filtrarDestinoPlanes('covenas', this)">Coveñas</button>
+                <button class="btn-destino" onclick="filtrarDestinoPlanes('santa-marta', this)">Santa Marta</button>
+                <button class="btn-destino" onclick="filtrarDestinoPlanes('capurgana', this)">Capurganá</button>
+                <button class="btn-destino" onclick="filtrarDestinoPlanes('eje-cafetero', this)">Eje Cafetero</button>
+            </div>
+        </div>
+
+        <div class="grid-catalogo">
+
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://www.semana.com/resizer/v2/VH3QB43FVJB6VEVZJO2VPYWC3Y.jpeg?smart=true&auth=5bfa3c1460f634ee29bd20b815036f65b6f32cbfdc9242b7aaeff507dde6bd07&width=1280&height=720" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Junio</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Coveñas Vacacional</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> 12 al 15 de Junio</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Acapulco (Frente a la playa)</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador ultimos">¡se estan acabando!</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiples</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$575.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://covenasdiving.com/wp-content/uploads/2021/07/Photo_7143570_DJI_146_jpg_3461755_0_20201212173030_photo_original-scaled.jpeg" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Julio</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Coveñas Sol y Playa</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> 10 AL 13 de Julio</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel Acapulco (frente a la playa)</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$475.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+            
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://www.shutterstock.com/image-photo/traditional-colombian-coastal-hat-on-600nw-2688925685.jpg" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Julio</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Coveñas+Cartagena+Baru</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> 24 AL 27 de Julio</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel Acapulco (frente a la playa)</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiples,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Visita a Cartagena ciudad amurallada,zapatos viejos y castillo san felipe(no incluye entrada al castillo)</li>
+                            <li>Playa baru (tarde de baño)</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$510.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://turismo.encolombia.com/wp-content/uploads/2024/06/Turismo-en-Covenas.jpg" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Agosto </span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Festivo inolvidable</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> del 14 al 17 de agosto</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel Acapulco</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            <li>Tour a la caimanera(no incluye valor de la canoa)</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$575.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+             <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://www.shutterstock.com/image-photo/sucre-sincelejo-colombia-april-23-600nw-2484701757.jpg" alt="Coveñas">
+                    <span class="badge-tipo">4 Noches / 5 Días</span>
+                    <span class="badge-mes">Agosto </span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Coveñas atardecer </h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> del 21 al 26 de agosto</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel popeye</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel popeye con piscina en acomodacion multiples</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno,almuerzo,cena
+                                Martes: desayuno,almuerzo,cena
+                                Miercoles: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Noche integracion fiesta neon</li>
+                            <li>tour a la caimanera(no incluye valor de la canoa)</li>
+                            <li>pool party en la piscina</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$745.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-NB9MsmBT1o9idGIBWbl9FNCDofZ-0P2tjg&s" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Septiembre</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Amor y amistad en coveñas</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> del 11 al 14 de Septiembre</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel popeye</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel popeye con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            <li>Pool party en la piscina</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$390.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+<div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://www.civitatis.com/f/colombia/covenas/covenas.jpg" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Octubre</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Disfruta el puente festivo</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> del 9 al 12 de octubre </p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel Acapulco</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador pocos">Pocos Cupos</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Jueves: desayuno,almuerzo,cena
+                                Viernes: desayuno,almuerzo,cena
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno
+                                
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Tour a la caimanera(no incluye canoa)</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$620.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://condominiovistamar.com/wp-content/uploads/2025/07/playas-en-caovenas.webp" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Octubre</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Nos vamos para coveñas</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> Viernes 23 al 26 de Octubre</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel popeye</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador pocos">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel popeye con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno,almuerzo,cena
+                                Lunes: desayuno
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            <li>Pool party en la piscina</li>
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$390.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+<div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjfVB8dBGwqGiC8ZdI6rzcpEY8jcL3COKzIw&s" alt="Coveñas">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Diciembre-Enero</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Navidad en coveñas</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> 18 al 21 de diciembre</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel Acapulco</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                       <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Jueves: desayuno,almuerzo,cena
+                                Viernes: desayuno,almuerzo,cena
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno
+                                
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Tour a la caimanera(no incluye canoa)</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$480.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+            <div class="tarjeta-viaje" data-destino-plan="covenas">
+                <div class="imagen-contenedor">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjfVB8dBGwqGiC8ZdI6rzcpEY8jcL3COKzIw&s" alt="Coveñas">
+                    <span class="badge-tipo">3 Noches / 4 Días</span>
+                    <span class="badge-mes">Diciembre-Enero</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Fin de año en coveñas</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> 30 de diciembre al 3 de enero</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Hotel Acapulco</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                       <ul class="lista-incluye"><li>Transporte ida y regreso bus de Turismo con baño y aire acondicionado </li><li>Hospedaje Hotel Acapulco con piscina en acomodacion multiple,acomodacion de pareja tiene un costo adicional del 10%</li>
+                            <li>Alimentación completa
+                                Jueves: desayuno,almuerzo,cena
+                                Viernes: desayuno,almuerzo,cena
+                                Sabado: desayuno,almuerzo,cena
+                                Domingo: desayuno
+                                
+                            </li>
+                            <li>Tour en la noche al pueblo de tolu</li>
+                            <li>Tour a la caimanera(no incluye canoa)</li>
+                            <li>Noche integracion fiesta blanca</li>
+                            
+                            <li>Asistencia medica</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$880.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+          
+
+
+            <div class="tarjeta-viaje" data-destino-plan="santa-marta">
+                <div class="imagen-contenedor">
+                    <img src="https://santamartatrip.com/sites/default/files/cocoon/fiesta-es-santa-marta.jpg" alt="Santa Marta">
+                    <span class="badge-tipo">3 Noches / 4 Días</span>
+                    <span class="badge-mes">Junio</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>¿Nos vamos para santa marta?</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> Del 25 al 29 de Junio</p>
+                    <p class="detalle-item"><strong>🏨 Hospedaje:</strong> Apartamento santa maria del mar</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador pocos">Pocos Cupos</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso (bus con baño,aire acondicionado y sillas reclinables)</li>
+                            <li>Hospedaje condominio santa maria del mar(frente al mar,con piscina)ubicado en el Rodadero,acomodaciones multiples</li>
+                            <li>Alimentacion
+                                Viernes:almuerzo cena
+                                Sabado:desayuno,almuerzo y cena 
+                                Domingo:desayuno y cena
+                                Lunes:desayuno
+                            </li>
+                            <li>Integracion-noche blanca en chiva rumbera</li>
+                            <li>Manilla hotelera</li>
+                            <li>Seguro de viaje</li>
+                            <li>Tasa de aseo</li>
+                            </ul>
+                    </div>
+                    </div>
+
+                
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$665.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+          
+            <div class="tarjeta-viaje" data-destino-plan="santa-marta">
+                <div class="imagen-contenedor">
+                    <img src="https://t4.ftcdn.net/jpg/04/94/18/69/360_F_494186934_vfNuhc76XMnMI8QUQPkqXnjcp62Ob8zZ.jpg" alt="Santa Marta">
+                    <span class="badge-tipo">3 Noches / 4 Días</span>
+                    <span class="badge-mes">Octubre</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Santa Marta Receso</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> Del 8 al 12 de octubre</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Condominio santa maria del mar</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador ultimos">Últimos Cupos</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso (bus con baño,aire acondicionado y sillas reclinables)</li>
+                            <li>Hospedaje condominio santa maria del mar(frente al mar,con piscina)ubicado en el Rodadero,acomodaciones multiples</li>
+                            <li>Alimentacion
+                                Viernes:almuerzo cena
+                                Sabado:desayuno,almuerzo y cena 
+                                Domingo:desayuno y cena
+                                Lunes:desayuno
+                            </li>
+                            <li>Integracion-noche blanca en chiva rumbera</li>
+                            <li>Manilla hotelera</li>
+                            <li>Seguro de viaje</li>
+                            <li>Tasa de aseo</li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$675.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+            <div class="tarjeta-viaje" data-destino-plan="santa-marta">
+                <div class="imagen-contenedor">
+                    <img src="https://hotelparquetayrona.com/wp-content/uploads/2025/06/las-mejores-playas-en-santa-marta.webp" alt="Santa Marta">
+                    <span class="badge-tipo">3 Noches / 4 Días</span>
+                    <span class="badge-mes">Diciembre-enero</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Fin de año en santa Marta</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> del 30 de diciembre al 3 de enero</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> condominio santa maria del mar</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                       <ul class="lista-incluye"><li>Transporte ida y regreso (bus con baño,aire acondicionado y sillas reclinables)</li>
+                            <li>Hospedaje condominio santa maria del mar(frente al mar,con piscina)ubicado en el Rodadero,acomodaciones multiples</li>
+                            <li>Alimentacion
+                                Viernes:almuerzo cena
+                                Sabado:desayuno,almuerzo y cena 
+                                Domingo:desayuno y cena
+                                Lunes:desayuno
+                            </li>
+                            <li>Integracion-noche blanca en chiva rumbera</li>
+                            <li>Manilla hotelera</li>
+                            <li>Seguro de viaje</li>
+                            <li>Tasa de aseo</li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$789.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+
+            <div class="tarjeta-viaje" data-destino-plan="capurgana">
+                <div class="imagen-contenedor">
+                    <img src="https://awake.travel/storage/courses/1611094927808182.jpg?v=M0Y0T1cB05YZsKbp" alt="Capurganá">
+                    <span class="badge-tipo">3 Noches 4 Dias (Bus + Lancha)</span>
+                    <span class="badge-mes">Noviembre</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Capurganá Exótico</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> Del 12 al 17 de noviembre </p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> hotel coral azul con piscina,frente al mar</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte terrestre ida y regreso(medellin-necocli y viceversa)</li>
+                            <li>Transporte maritimo (catamaran)</li>
+                            <li>Sapzurro</li>
+                            <li>Hospedaje en sapzurro-hotel coral azul con piscina,frente al mar(acomodaciones multiples,la habitacion en pareja tiene un costo adicional del 10%)</li>
+                        <li>Alimentacion completa
+                            viernes:almuerzo cena
+                            Sabado:desayuno,akmuerzo,cena
+                            Domingo:desayuno,almuerzo,cena
+                            Lunes:desayuno y almuerzo
+                        </li>
+                        <li>Tours
+                            -Caminata ecologica a la miel-frontera con panama
+                            -Tour en Lancha a capurgana(nota: los tours incluyen almuerzo)
+                            
+                        </li>
+                        <li>Noche integracion blanca </li>
+                        <li>Tarjeta asistencia medica</li>
+                        <li>Coordinador acompañante</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$1.200.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+
+
+            <div class="tarjeta-viaje" data-destino-plan="eje-cafetero">
+                <div class="imagen-contenedor">
+                    <img src="https://agenciajantravel.com/wp-content/uploads/2025/01/Todo-lo-que-debes-saber-para-viajar-al-Eje-Cafetero.png" alt="Eje Cafetero">
+                    <span class="badge-tipo">2 Noches / 3 Días</span>
+                    <span class="badge-mes">Julio</span>
+                </div>
+                <div class="tarjeta-contenido">
+                    <h4>Eje Cafetero puente festivo</h4>
+                    <p class="detalle-item"><strong>📅 Fecha:</strong> Viernes, 17 al 20 de julio</p>
+                    <p class="detalle-item"><strong>🏨 Hotel:</strong> Finca campestre</p>
+                    <p class="detalle-item"><strong>🚨 Cupos:</strong> <span class="cupo-indicador dispo">Disponibles</span></p>
+                    <div class="incluye-box">
+                        <ul class="lista-incluye"><li>Transporte ida y regreso bus turismo </li>
+                            <li>Hospedaje finca campestre acomodacionesmultiples (habitacion de pareja tiene un incremenento del 25.000 x noche persona)</li>
+                            <li>Alimentacion
+                                Sabado:desayuno,almuerzo y cena
+                                Domingo:desayuno,almuerzo y cena 
+                                Lunes:desayuno,almuerzo y refigerios 
+                            </li>
+                            <li>Tours 
+                                -Ingreso a los termales
+                                -Visita al parque de santa rosa de cabal
+                                -Parque del cafe,pasaporte multiple(incluye todos los juegos)
+                                -Salento
+                                -Valle del cccora opcional(valor de willy $20.000)
+                                -Filandia
+                            </li>
+                            <li>Noche integracion fiesta blanca,hora loca,fogata y mucho mas 
+                            </li>
+                            <li>Seguro de viaje </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="tarjeta-acciones">
+                    <div class="precio-contenedor"><span class="precio-label">Precio</span><span class="precio-valor">$635.000</span></div>
+                     <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20me%20interesa%20este%20viaje." target="_blank" class="btn-whatsapp">Cotizar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-contacto" id="contacto">
+        <div class="contacto-contenedor">
+            <h3>Ponte en Contacto</h3>
+            <div class="contacto-linea"></div>
+            <p>¿Tienes dudas o deseas personalizar tu viaje? Escríbenos o síguenos en nuestras redes sociales oficiales.</p>
+           
+            <div class="grid-canales">
+                <a href="https://wa.me/573217224552?text=Hola%20Excursiones%20Nia,%20estoy%20interesad%40%20en%20conocer%20un%20poco%20m%C3%A1s%20de%20tu%20cat%C3%A1logo." target="_blank" class="canal-tarjeta">
+                    <div class="canal-icono">💬</div>
+                    <h4>WhatsApp</h4>
+                    <p>321 7224552</p>
+                </a>
+
+                <a href="https://instagram.com/eyv_nia" target="_blank" class="canal-tarjeta">
+                    <div class="canal-icono">📸</div>
+                    <h4>Instagram</h4>
+                    <p>@eyv_nia</p>
+                </a>
+                 <a href="https://www.facebook.com/share/195qyWei76/?mibextid=wwXIfr" target="_blank" class="canal-tarjeta">
+                    <div class="canal-icono">👤</div>
+                    <h4>Facebook</h4>
+                    <p>excursiones y viajes nia</p>
+                </a>
+
+                <a href="https://www.tiktok.com/@eyv__nia?_r=1&_t=ZS-96ySYiUMyzXones.viajes2" target="_blank" class="canal-tarjeta">
+                    <div class="canal-icono">🎵</div>
+                    <h4>TikTok</h4>
+                    <p>@excurciones.viajes2</p>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="seccion-contacto" id="conoce-sobre-nosotros">
+    <div class="contacto-contenedor">
+        <h3>ACERCA DE NOSOTROS</h3>
+        <div class="contacto-linea"></div>
+
+        <p>
+             <strong>nuestra identidad</strong> 
+        </p>
+
+        <div class="grid-canales">
+            <div class="canal-tarjeta">
+                <div class="canal-icono">🌎</div>
+                <h4>Nuestra historia</h4>
+                <p>Excursiones y Viajes Nia nació en 2017 como un sueño familiar impulsado por la pasión de crear experiencias inolvidables para quienes desean descubrir nuevos destinos, descansar y compartir momentos especiales. Fundada por Estefani Giraldo, la empresa surgió con el propósito de brindar oportunidades de viaje accesibles para todas las personas, permitiéndoles disfrutar de unas vacaciones de calidad sin necesidad de realizar grandes inversiones.
+
+A lo largo de nuestro camino hemos enfrentado importantes desafíos, especialmente durante la pandemia, una etapa que puso a prueba nuestra capacidad de adaptación y compromiso. Gracias a la perseverancia, la dedicación y el amor por lo que hacemos, logramos fortalecernos y continuar creciendo. En 2023, nuestra empresa fue legalmente constituida, consolidando así un proyecto familiar construido con esfuerzo, responsabilidad y visión de futuro.
+
+Hoy seguimos trabajando para convertir cada viaje en una experiencia memorable, llena de tranquilidad, alegría y momentos que permanecen para siempre</p>
+            </div>
+
+            <div class="canal-tarjeta">
+                <div class="canal-icono">⭐</div>
+                <h4>¿Quienes somos?</h4>
+                <p>Somos una empresa colombiana con sede en Medellín, especializada en paquetes turísticos terrestres todo incluido. En Excursiones y Viajes Nia creemos que viajar debe estar al alcance de todos, por eso ofrecemos planes accesibles y de excelente calidad a destinos como Coveñas, Santa Marta, Capurganá y el Eje Cafetero.
+
+Nos caracterizamos por brindar un servicio cercano, organizado y confiable, donde cada detalle es cuidadosamente planeado para garantizar la satisfacción de nuestros viajeros. Nuestros valores se fundamentan en el amor por el servicio, la creatividad, el respeto, la organización, la paz y el disfrute de cada experiencia.
+
+Más que vender viajes, buscamos crear recuerdos, conectar personas con nuevos destinos y ofrecer momentos de descanso y felicidad que contribuyan al bienestar de nuestros clientes</p>
+            </div>
+
+            <div class="canal-tarjeta">
+                <div class="canal-icono">🚌</div>
+                <h4>Nuestra razon de ser</h4>
+                <p>Nuestra razón de ser es hacer posible que más personas puedan viajar, descansar y disfrutar experiencias únicas a precios accesibles, sin sacrificar la calidad y la comodidad. Trabajamos cada día con el compromiso de ofrecer un servicio excepcional, mejorando continuamente para superar las expectativas de quienes confían en nosotros.
+
+Nos inspira el deseo de crecer como empresa, generar confianza en nuestros viajeros y convertirnos en una referencia de calidad y excelencia dentro del sector turístico. Visualizamos un futuro de estabilidad, rentabilidad y expansión, llegando a más personas y creando experiencias que dejen huella en cada destino.
+
+En Excursiones y Viajes Nia seguimos avanzando con pasión, compromiso y la convicción de que cada viaje es una oportunidad para vivir momentos únicos.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <footer>
+        <p class="eslogan-footer">Excursiones y Viajes NIA — Aventura garantizada</p>
+<p>&copy; 2026 Excursiones y Viajes NIA. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function filtrarDestinoPlanes(destino, botonPresionado) {
+            const botonesDestino = document.querySelectorAll('.btn-destino');
+            botonesDestino.forEach(btn => btn.classList.remove('activo'));
+            botonPresionado.classList.add('activo');
+
+            const tarjetas = document.querySelectorAll('[data-destino-plan]');
+            tarjetas.forEach(tarjeta => {
+                if (destino === 'todos' || tarjeta.getAttribute('data-destino-plan') === destino) {
+                    tarjeta.style.display = 'flex';
+                } else {
+                    tarjeta.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
